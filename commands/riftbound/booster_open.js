@@ -19,6 +19,8 @@ module.exports = {
 	async execute(interaction) {
 		const chosenSet = interaction.options.getString('set') ?? "ogn";
 
+		console.log("Oppening booster from set " + chosenSet);
+
 		const url = 'https://mon-site.com'; // même URL fictive pour grouper les embeds
 
 
