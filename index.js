@@ -61,5 +61,13 @@ client.once(Events.ClientReady, (readyClient) => {
 	}
 )});
 
+const fetchCards = require('./riftbound_utils/fetch_cards');
+
+fetchCards('ogn');
+fetchCards('unl');
+fetchCards('sfd');
+
+require('./deploy-commands');
+
 console.log("Starting to login ...")
 client.login(token);
