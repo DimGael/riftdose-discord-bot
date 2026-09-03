@@ -11,18 +11,41 @@ function keepsKeysInArray(data, keys) {
   const formattedData = {};
 
   keys.forEach(key => {
-    if (key.name) {
+    if (key.name)
       formattedData[key.name] = keepsKeysInArray(data[key.name], key.keys)
-    } else {
+    else 
       formattedData[key] = data[key];
-    }
   });
 
   return formattedData;
 }
 
-module.exports = async function (set_id = 'ogn') {
+function fileNeedsUpdate(filepath) {
+  if (!fs.existsSync(filepath)) 
+    return true;
+  let creationDate = new Date(JSON.parse(fs.readFileSync(filepath)).creationDate);
+  let today = new Date();
+  let diff = (creationDate.getFullYear() - today.getFullYear())*12 + (creationDate.getMonth() - today.getMonth());
+  if (diff <= -1)
+    return true;
+  else
+    return false;
+}
+
+/*
+si onlyIfOutdated = false -> fetch dans tous les cas
+si fichiers existe pas -> fetch dans tous les cas
+*/
+
+module.exports = async function (set_id = 'ogn', onlyIfOutdated = true) {
   try {
+    let filePath = './riftbound_utils/datas/' + set_id + '.json';
+
+    if (fs.existsSync(filePath) && (onlyIfOutdated && !fileNeedsUpdate(filePath))) {
+      console.log("Données déjà chargées pour le set '" + set_id + "'. Utilisation de ces données")
+      return;
+    }
+
     console.log("Récupération des cartes du set " + set_id + " ...")
 
     let page = 1;
@@ -91,7 +114,8 @@ module.exports = async function (set_id = 'ogn') {
       page++;
     };
 
-    fs.writeFileSync('./riftbound_utils/datas/' + set_id + '.json', JSON.stringify(mappedResult, null, 2), 'utf8', (err) => {
+    mappedResult.creationDate = new Date();
+    fs.writeFileSync(filePath, JSON.stringify(mappedResult, null, 2), 'utf8', (err) => {
       if (err) {
         console.error("Erreur :", err);
         return;

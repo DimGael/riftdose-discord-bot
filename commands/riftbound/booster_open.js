@@ -23,7 +23,6 @@ module.exports = {
 
 		const url = 'https://mon-site.com'; // même URL fictive pour grouper les embeds
 
-
 		const hitImages = [];
 
 		const myPack = generate_booster(chosenSet);
@@ -38,7 +37,7 @@ module.exports = {
 
 		const embedNormals = normalCards.map(card =>
 			new EmbedBuilder()
-				.setURL(url) // même lien pour tous = regroupement en galerie
+				.setURL(url)
 				.setImage(card.image)
 				.setColor(0x0099FF)
 				.setTitle('Ouverture de booster ! [SET : ' + chosenSet + '] - Commons')
