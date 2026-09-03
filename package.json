@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "npm run fetch-all-sets && node index.js",
+    "start": "node index.js",
     "build": "node deploy-commands.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-all-sets": "node fetch-all-sets.js"

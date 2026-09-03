@@ -32,11 +32,6 @@ function fileNeedsUpdate(filepath) {
     return false;
 }
 
-/*
-si onlyIfOutdated = false -> fetch dans tous les cas
-si fichiers existe pas -> fetch dans tous les cas
-*/
-
 module.exports = async function (set_id = 'ogn', onlyIfOutdated = true) {
   try {
     let filePath = './riftbound_utils/datas/' + set_id + '.json';
