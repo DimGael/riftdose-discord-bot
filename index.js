@@ -21,7 +21,7 @@ for (const folder of commandFolders) {
 		const command = require(filePath);
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
-			console.log("Setting command "  + command.data.name);
+			console.log("Setting command " + command.data.name);
 			client.commands.set(command.data.name, command);
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
@@ -59,7 +59,8 @@ client.once(Events.ClientReady, (readyClient) => {
 			}
 		}
 	}
-)});
+	)
+});
 
 const fetchCards = require('./riftbound_utils/fetch_cards');
 
@@ -70,4 +71,15 @@ fetchCards('sfd');
 require('./deploy-commands');
 
 console.log("Starting to login ...")
-client.login(token);
+client.login(token)
+	.then((result) => {
+		console.log("Connected !")
+	})
+	.catch((reason) => {
+		console.log("Error during login");
+		console.log(reason);
+	}).finally(() => {
+		console.log("Login process is over !");
+	})
+
+console.log("End of file");
